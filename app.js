@@ -1,6 +1,27 @@
-const fs = require('fs');
+const notes = require('./notes.js')
+//const chalk = require('chalk')
+const yargs = require('yargs') 
 
-fs.writeFileSync('notes.txt', 'HOLA')
+yargs.command({
+    command: 'add',
+    describe: 'Add new note',
+    builder : {
+        title : {
+            describe: 'Note title',
+            demandOptions: true,
+            type: 'string',
+        },
+        body : {
+            describe : 'Note body',
+            demandOptions: true,
+            type: 'string',
+        }
+    },
 
-fs.appendFileSync('notes.txt', 'My Name is Daniel')
+    handler : function (argv){
+        notes.addNote(argv.title, argv.body)
+        }
+    
+})
 
+yargs.parse()
